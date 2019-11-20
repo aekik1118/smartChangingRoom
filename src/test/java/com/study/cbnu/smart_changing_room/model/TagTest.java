@@ -10,7 +10,7 @@ public class TagTest {
     public void builder(){
         Tag tag = Tag.builder()
                 .clothes_id(3L)
-                .category(TagCategory.AUTUMN)
+                .category("겨울용")
                 .build();
         assertThat(tag).isNotNull();
     }
@@ -18,12 +18,12 @@ public class TagTest {
     @Test(expected = NullPointerException.class)
     public void clotes_id_null_check(){
         Tag tag = Tag.builder()
-                .category(TagCategory.AUTUMN)
+                .category("겨울용")
                 .build();
     }
 
-    @Test(expected = NullPointerException.class)
-    public void category_null_check(){
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    public void category_empty_check(){
         Tag tag = Tag.builder()
                 .clothes_id(3L)
                 .build();

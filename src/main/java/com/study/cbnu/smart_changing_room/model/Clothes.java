@@ -21,7 +21,7 @@ public class Clothes {
 
     private final Long user_id;
 
-    private final String name;
+    private String name;
 
     private String image_path;
 

@@ -26,7 +26,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void saveUser(){
+    public void save_user(){
 
         List<User> users = userRepository.selectAll();
 
