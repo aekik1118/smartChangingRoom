@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS TAG_TBL;
+DROP SEQUENCE IF EXISTS seq_tag;
+
 DROP TABLE IF EXISTS CLOTHES_TBL;
 DROP SEQUENCE IF EXISTS seq_clothes;
 
@@ -5,8 +8,8 @@ DROP TABLE IF EXISTS USER_TBL;
 DROP SEQUENCE IF EXISTS seq_user;
 
 CREATE SEQUENCE seq_user START 1;
-
 CREATE SEQUENCE seq_clothes START 1;
+CREATE SEQUENCE seq_tag START 1;
 
 CREATE TABLE USER_TBL(
   id integer not null DEFAULT nextval('seq_user'),
@@ -24,5 +27,12 @@ CREATE TABLE CLOTHES_TBL(
   register_at TIMESTAMP default now(),
   recent_usage_at TIMESTAMP default now(),
   constraint pk_clothes primary key (id)
-)
+);
+
+CREATE TABLE TAG_TBL(
+  id integer not null DEFAULT nextval('seq_tag'),
+  clothes_id integer REFERENCES CLOTHES_TBL(id) ON DELETE CASCADE,
+  category varchar(100) not null,
+  constraint pk_tag primary key (id)
+);
 

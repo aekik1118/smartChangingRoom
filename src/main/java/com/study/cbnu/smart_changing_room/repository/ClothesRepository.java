@@ -25,5 +25,5 @@ public interface ClothesRepository {
     Long update(Clothes clothes);
 
     @Delete("DELETE FROM CLOTHES_TBL WHERE id = #{id}")
-    void delete(Clothes clothes);
+    void delete(Long id);
 }

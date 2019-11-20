@@ -82,7 +82,7 @@ public class ClothesRepositoryTest {
 
         List<Clothes> before_delete_clothes = clothesRepository.selectAll();
 
-        clothesRepository.delete(clothes);
+        clothesRepository.delete(clothes.getId());
 
         List<Clothes> after_delete_clothes = clothesRepository.selectAll();
 
