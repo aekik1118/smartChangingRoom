@@ -2,6 +2,8 @@ package com.study.cbnu.smart_changing_room.repository;
 
 import com.study.cbnu.smart_changing_room.model.Clothes;
 import com.study.cbnu.smart_changing_room.model.ClothesStatus;
+import com.study.cbnu.smart_changing_room.model.Tag;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class ClothesRepositoryTest {
 
     @Autowired
     ClothesRepository clothesRepository;
+
+    @Autowired
+    TagRepository tagRepository;
 
     @Test
     public void mapper_load(){
@@ -87,6 +92,67 @@ public class ClothesRepositoryTest {
         List<Clothes> after_delete_clothes = clothesRepository.selectAll();
 
         assertThat(before_delete_clothes.size()).isEqualTo(after_delete_clothes.size() + 1);
+    }
+
+    @Test
+    public void get_clothes_list(){
+
+        List<Clothes> before_clothes_list = clothesRepository.get_clothes_list(1L);
+
+        int clothes_add_size = 10;
+
+        for(int i=0; i<clothes_add_size; i++){
+            Clothes clothes = Clothes.builder()
+                    .user_id(1L)
+                    .name("맨투맨" + i)
+                    .image_path(null)
+                    .status(ClothesStatus.NOT_USING)
+                    .build();
+
+            clothesRepository.save(clothes);
+        }
+
+        List<Clothes> after_clothes_list = clothesRepository.get_clothes_list(1L);
+
+        assertThat(before_clothes_list.size() + clothes_add_size).isEqualTo(after_clothes_list.size());
+
+    }
+
+    @Test
+    public void get_clothes_list_by_tag(){
+        List<Clothes> before_clothes_list = clothesRepository.get_clothes_list_by_tag(1L, "test_tag");
+
+        int clothes_add_size = 10;
+
+        int same_tag_size = 5;
+
+        for(int i=0; i<clothes_add_size; i++){
+            Clothes clothes = Clothes.builder()
+                    .user_id(1L)
+                    .name("맨투맨" + i)
+                    .image_path(null)
+                    .status(ClothesStatus.NOT_USING)
+                    .build();
+
+            clothesRepository.save(clothes);
+
+            if(i < same_tag_size){
+                Tag test_tag = Tag.builder()
+                        .clothes_id(clothes.getId())
+                        .category("test_tag")
+                        .build();
+
+                tagRepository.save(test_tag);
+            }
+
+            Tag test_tag = Tag.builder()
+                    .clothes_id(clothes.getId())
+                    .category("dummy_tag")
+                    .build();
+        }
+
+        List<Clothes> after_clothes_list = clothesRepository.get_clothes_list_by_tag(1L, "test_tag");
+        assertThat(before_clothes_list.size() + same_tag_size).isEqualTo(after_clothes_list.size());
     }
 
 }

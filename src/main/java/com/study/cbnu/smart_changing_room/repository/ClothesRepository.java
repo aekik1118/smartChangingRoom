@@ -26,4 +26,11 @@ public interface ClothesRepository {
 
     @Delete("DELETE FROM CLOTHES_TBL WHERE id = #{id}")
     void delete(Long id);
+
+    @Select("SELECT * FROM CLOTHES_TBL WHERE user_id = #{user_id}")
+    List<Clothes> get_clothes_list(long user_id);
+
+    @Select("SELECT CLOTHES_TBL.id, CLOTHES_TBL.name, CLOTHES_TBL.image_path FROM CLOTHES_TBL INNER JOIN TAG_TBL ON CLOTHES_TBL.id = TAG_TBL.clothes_id WHERE TAG_TBL.category = #{test_tag} AND CLOTHES_TBL.user_id = #{user_id}")
+    List<Clothes> get_clothes_list_by_tag(long user_id, String test_tag);
+
 }
