@@ -26,4 +26,7 @@ public interface UserRepository {
 
     @Delete("DELETE FROM USER_TBL WHERE id = #{id}")
     void delete(Long id);
+
+    @Select("SELECT * FROM USER_TBL WHERE name = #{name}")
+    Optional<User> getUserByName(String name);
 }

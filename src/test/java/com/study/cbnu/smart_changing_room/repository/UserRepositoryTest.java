@@ -79,4 +79,18 @@ public class UserRepositoryTest {
 
     }
 
+    @Test
+    public void get_user_by_name(){
+
+        User user = User.builder()
+                .name("test_name")
+                .build();
+
+        Long is_get_user = userRepository.save(user);
+
+        Optional<User> userByName = userRepository.getUserByName(user.getName());
+
+        assertThat(userByName.get().getId()).isEqualTo(user.getId());
+    }
+
 }
