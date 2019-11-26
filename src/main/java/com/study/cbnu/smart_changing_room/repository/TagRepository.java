@@ -25,4 +25,10 @@ public interface TagRepository {
 
     @Delete("DELETE FROM TAG_TBL WHERE id = #{id}")
     void delete(Long id);
+
+    @Select("SELECT * FROM TAG_TBL WHERE clothes_id = #{clothes_id}")
+    List<Tag> select_by_clothes_id(Long clothes_id);
+
+    @Select("SELECT DISTINCT TAG_TBL.category FROM TAG_TBL INNER JOIN CLOTHES_TBL ON CLOTHES_TBL.id = TAG_TBL.clothes_id WHERE CLOTHES_TBL.user_id = #{user_id}")
+    List<String> select_by_user_id_no_duplication(long user_id);
 }

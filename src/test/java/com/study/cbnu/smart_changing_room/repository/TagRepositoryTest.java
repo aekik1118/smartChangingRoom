@@ -81,4 +81,55 @@ public class TagRepositoryTest {
         assertThat(after_delete_tagList.size()).isEqualTo(before_delete_tagList.size() - 1);
     }
 
+    @Test
+    public void get_tag_list_by_clothes_id(){
+
+        List<Tag> before_tagList = tagRepository.select_by_clothes_id(1L);
+
+        int add_tag_size = 3;
+
+        for(int i=0; i<add_tag_size; i++){
+            Tag test_tag = Tag.builder()
+                    .clothes_id(1L)
+                    .category("test_tag" + i)
+                    .build();
+
+            tagRepository.save(test_tag);
+        }
+
+        List<Tag> after_tagList = tagRepository.select_by_clothes_id(1L);
+
+        assertThat(before_tagList.size()).isEqualTo(after_tagList.size() - add_tag_size);
+    }
+
+    @Test
+    public void get_tag_list_by_user_id_no_duplication(){
+
+        List<String> before_taglist = tagRepository.select_by_user_id_no_duplication(1L);
+
+        int add_tag_size = 3;
+
+        for(int i=0; i<add_tag_size; i++){
+            Tag test_tag = Tag.builder()
+                    .clothes_id(1L)
+                    .category("test_tagtest" + i)
+                    .build();
+
+            tagRepository.save(test_tag);
+        }
+
+        for(int i=0; i<add_tag_size; i++){
+            Tag test_tag = Tag.builder()
+                    .clothes_id(2L)
+                    .category("test_tagtest" + i)
+                    .build();
+
+            tagRepository.save(test_tag);
+        }
+
+        List<String> after_taglist = tagRepository.select_by_user_id_no_duplication(1L);
+
+        assertThat(after_taglist.size() - add_tag_size).isEqualTo(before_taglist.size());
+    }
+
 }
