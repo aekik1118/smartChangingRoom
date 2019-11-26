@@ -83,7 +83,7 @@ public class UserRepositoryTest {
     public void get_user_by_name(){
 
         User user = User.builder()
-                .name("test_name")
+                .name("test_name2")
                 .build();
 
         Long is_get_user = userRepository.save(user);

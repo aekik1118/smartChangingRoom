@@ -1,8 +1,10 @@
 package com.study.cbnu.smart_changing_room.service;
 
 import com.study.cbnu.smart_changing_room.model.Clothes;
+import com.study.cbnu.smart_changing_room.model.Tag;
 import com.study.cbnu.smart_changing_room.model.User;
 import com.study.cbnu.smart_changing_room.repository.UserRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class ClothesServiceTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TagService tagService;
 
 
     @Test
@@ -146,6 +151,49 @@ public class ClothesServiceTest {
 
         List<Clothes> after_clothes_list = clothesService.get_clothes_list(created_test_user.getId());
         assertThat(before_clothes_list.size() + clothes_add_size).isEqualTo(after_clothes_list.size());
+
+    }
+
+    @Test
+    public void get_clothes_list_by_tag(){
+        User test_user = User.builder()
+                .name("test_user_name")
+                .build();
+
+        User created_test_user = userService.create(test_user);
+
+        List<Clothes> before_clothes_list = clothesService.get_clothes_list(created_test_user.getId());
+
+        int clothes_add_size = 10;
+
+        int same_tag_size = 5;
+
+        for(int i=0; i<clothes_add_size; i++){
+            Clothes clothes = Clothes.builder()
+                    .user_id(created_test_user.getId())
+                    .name("맨투맨" + i)
+                    .image_path(null)
+                    .build();
+
+            clothesService.create(clothes);
+
+            if(i < same_tag_size){
+                Tag test_tag = Tag.builder()
+                        .clothes_id(clothes.getId())
+                        .category("test_tag")
+                        .build();
+
+                tagService.create(test_tag);
+            }
+
+            Tag test_tag = Tag.builder()
+                    .clothes_id(clothes.getId())
+                    .category("dummy_tag")
+                    .build();
+            tagService.create(test_tag);
+        }
+
+        List<Clothes> after_clothes_list = clothesService.get_clothes_list(created_test_user.getId());
 
     }
 

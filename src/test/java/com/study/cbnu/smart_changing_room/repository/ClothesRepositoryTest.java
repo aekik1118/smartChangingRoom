@@ -149,6 +149,7 @@ public class ClothesRepositoryTest {
                     .clothes_id(clothes.getId())
                     .category("dummy_tag")
                     .build();
+            tagRepository.save(test_tag);
         }
 
         List<Clothes> after_clothes_list = clothesRepository.get_clothes_list_by_tag(1L, "test_tag");
