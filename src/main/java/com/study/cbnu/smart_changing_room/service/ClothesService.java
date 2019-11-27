@@ -48,4 +48,6 @@ public class ClothesService {
     public List<Clothes> get_clothes_list(Long id) {
         return clothesRepository.get_clothes_list(id);
     }
+
+    //최근 사용날짜 갱신 작업
 }
