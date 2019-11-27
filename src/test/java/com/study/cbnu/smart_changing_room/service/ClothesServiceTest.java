@@ -35,6 +35,26 @@ public class ClothesServiceTest {
 
     @Test
     public void create(){
+        User test_user = User.builder()
+                .name("test_user_name")
+                .build();
+
+        User created_test_user = userService.create(test_user);
+
+        ClothesDTO clothesDTO = ClothesDTO.builder()
+                .user_id(created_test_user.getId())
+                .name("clothes_test_name")
+                .build();
+
+        Clothes created_test_clothes = clothesService.create(clothesDTO);
+
+        assertThat(created_test_clothes.getName()).isEqualTo(clothesDTO.getName());
+
+        List<Tag> list_by_clothes_id = tagService.get_list_by_clothes_id(created_test_clothes.getId());
+    }
+
+    @Test
+    public void create_with_tags(){
 
         User test_user = User.builder()
                 .name("test_user_name")

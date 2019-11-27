@@ -3,6 +3,7 @@ package com.study.cbnu.smart_changing_room.model;
 import lombok.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Builder
 @Getter

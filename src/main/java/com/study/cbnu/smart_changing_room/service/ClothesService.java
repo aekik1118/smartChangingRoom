@@ -43,13 +43,18 @@ public class ClothesService {
 
         Clothes created_clothes = create(clothes);
 
-        clothesDTO.getTag_list().forEach(e->{
-            Tag tag = Tag.builder()
-                    .clothes_id(created_clothes.getId())
-                    .category(e)
-                    .build();
-            tagRepository.save(tag);
-        });
+        List<String> tag_list = clothesDTO.getTag_list();
+
+        if(tag_list != null && !tag_list.isEmpty()){
+            tag_list.forEach(e->{
+                Tag tag = Tag.builder()
+                        .clothes_id(created_clothes.getId())
+                        .category(e)
+                        .build();
+                tagRepository.save(tag);
+            });
+        }
+
         return created_clothes;
     }
 

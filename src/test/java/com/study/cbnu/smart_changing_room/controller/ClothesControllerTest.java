@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -72,6 +73,34 @@ public class ClothesControllerTest {
                     .andExpect(status().isOk());
 
         userService.delete(created_user.getId());
+    }
+
+    @Test
+    public void create_clothes_no_tag() throws Exception {
+        User user = User.builder()
+                .name("clothes_test_user_name")
+                .build();
+
+        User created_user = userService.create(user);
+
+        ClothesDTO clothesDTO = ClothesDTO.builder()
+                .user_id(created_user.getId())
+                .name("clothes_test_name")
+                .build();
+
+        mockMvc.perform(post("/api/clothes")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(clothesDTO)))
+                .andDo(print())
+                .andExpect(jsonPath("id").exists())
+                .andExpect(status().isOk());
+
+        userService.delete(created_user.getId());
+    }
+
+    @Test
+    public void get_clothse(){
+
     }
 
 
