@@ -1,6 +1,7 @@
 package com.study.cbnu.smart_changing_room.service;
 
 import com.study.cbnu.smart_changing_room.model.Clothes;
+import com.study.cbnu.smart_changing_room.model.ClothesDTO;
 import com.study.cbnu.smart_changing_room.model.Tag;
 import com.study.cbnu.smart_changing_room.model.User;
 import com.study.cbnu.smart_changing_room.repository.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,15 +42,27 @@ public class ClothesServiceTest {
 
         User created_test_user = userService.create(test_user);
 
+        List<String> test_tag_list = new ArrayList<>(10);
 
-        Clothes test_clothes = Clothes.builder()
-                .name("test_clothes_name")
+        for(int i=0; i<5; i++){
+            test_tag_list.add("test_tag" + i);
+        }
+
+        ClothesDTO clothesDTO = ClothesDTO.builder()
                 .user_id(created_test_user.getId())
+                .name("clothes_test_name")
+                .tag_list(test_tag_list)
                 .build();
 
-        Clothes created_test_clothes = clothesService.create(test_clothes);
+        Clothes created_test_clothes = clothesService.create(clothesDTO);
 
-        assertThat(created_test_clothes.getName()).isEqualTo(test_clothes.getName());
+        assertThat(created_test_clothes.getName()).isEqualTo(clothesDTO.getName());
+
+        List<Tag> list_by_clothes_id = tagService.get_list_by_clothes_id(created_test_clothes.getId());
+
+        for(int i=0; i<list_by_clothes_id.size(); i++){
+            assertThat(test_tag_list.get(i)).isEqualTo(list_by_clothes_id.get(i).getCategory());
+        }
     }
 
     @Test

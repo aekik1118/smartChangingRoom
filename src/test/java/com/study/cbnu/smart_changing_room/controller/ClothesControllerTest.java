@@ -1,8 +1,10 @@
 package com.study.cbnu.smart_changing_room.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.study.cbnu.smart_changing_room.model.ClothesDTO;
 import com.study.cbnu.smart_changing_room.model.User;
+import com.study.cbnu.smart_changing_room.service.ClothesService;
+import com.study.cbnu.smart_changing_room.service.TagService;
 import com.study.cbnu.smart_changing_room.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -23,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class ClothesControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -32,40 +36,44 @@ public class UserControllerTest {
     ObjectMapper objectMapper;
 
     @Autowired
+    ClothesService clothesService;
+
+    @Autowired
     UserService userService;
 
-    @Test
-    public void create_User() throws Exception {
-        User user = User.builder()
-                .name("controller_name")
-                .build();
-
-        mockMvc.perform(post("/api/user")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(user)))
-                    .andDo(print())
-                    .andExpect(status().isOk());
-
-
-    }
+    @Autowired
+    TagService tagService;
 
     @Test
-    public void get_user_id() throws Exception {
-
+    public void create_clothes() throws Exception {
         User user = User.builder()
-                .name("get_user_id_name")
+                .name("clothes_test_user_name")
                 .build();
 
         User created_user = userService.create(user);
 
-        mockMvc.perform(get("/api/user")
+        List<String> test_tag_list = new ArrayList<>(10);
+
+        for(int i=0; i<5; i++){
+            test_tag_list.add("test_tag1" + i);
+        }
+
+        ClothesDTO clothesDTO = ClothesDTO.builder()
+                .user_id(created_user.getId())
+                .name("clothes_test_name")
+                .tag_list(test_tag_list)
+                .build();
+
+        mockMvc.perform(post("/api/clothes")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .param("name",user.getName()))
+                .content(objectMapper.writeValueAsString(clothesDTO)))
                     .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("id").exists());
+                    .andExpect(jsonPath("id").exists())
+                    .andExpect(status().isOk());
 
         userService.delete(created_user.getId());
     }
+
+
 
 }

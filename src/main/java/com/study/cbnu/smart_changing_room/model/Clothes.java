@@ -37,6 +37,10 @@ public class Clothes {
         this(null, user_id, name, image_path, null, null, null, null);
     }
 
+    public Clothes(ClothesDTO clothesDTO) {
+        this(clothesDTO.getUser_id(), clothesDTO.getName(), clothesDTO.getImage_path());
+    }
+
     public Clothes(Long id, Long user_id, String name, String image_path, ClothesStatus status, Long using_count, LocalDateTime register_at, LocalDateTime recent_usage_at) {
         this.id = id;
 
@@ -68,4 +72,6 @@ public class Clothes {
         }
         this.recent_usage_at = recent_usage_at;
     }
+
+
 }

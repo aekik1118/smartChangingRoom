@@ -1,8 +1,11 @@
 package com.study.cbnu.smart_changing_room.service;
 
 import com.study.cbnu.smart_changing_room.model.Clothes;
+import com.study.cbnu.smart_changing_room.model.ClothesDTO;
+import com.study.cbnu.smart_changing_room.model.Tag;
 import com.study.cbnu.smart_changing_room.model.User;
 import com.study.cbnu.smart_changing_room.repository.ClothesRepository;
+import com.study.cbnu.smart_changing_room.repository.TagRepository;
 import com.study.cbnu.smart_changing_room.repository.UserRepository;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,12 @@ public class ClothesService {
 
     private final UserRepository userRepository;
 
-    public ClothesService(ClothesRepository clothesRepository, UserRepository userRepository) {
+    private final TagRepository tagRepository;
+
+    public ClothesService(ClothesRepository clothesRepository, UserRepository userRepository, TagRepository tagRepository) {
         this.clothesRepository = clothesRepository;
         this.userRepository = userRepository;
+        this.tagRepository = tagRepository;
     }
 
     public Clothes create(Clothes clothes) {
@@ -30,6 +36,21 @@ public class ClothesService {
 
         Long result = clothesRepository.save(clothes);
         return clothes;
+    }
+
+    public Clothes create(ClothesDTO clothesDTO) {
+        Clothes clothes = new Clothes(clothesDTO);
+
+        Clothes created_clothes = create(clothes);
+
+        clothesDTO.getTag_list().forEach(e->{
+            Tag tag = Tag.builder()
+                    .clothes_id(created_clothes.getId())
+                    .category(e)
+                    .build();
+            tagRepository.save(tag);
+        });
+        return created_clothes;
     }
 
     public Optional<Clothes> getClothes(Long id) {
@@ -48,6 +69,8 @@ public class ClothesService {
     public List<Clothes> get_clothes_list(Long id) {
         return clothesRepository.get_clothes_list(id);
     }
+
+
 
     //최근 사용날짜 갱신 작업
 }

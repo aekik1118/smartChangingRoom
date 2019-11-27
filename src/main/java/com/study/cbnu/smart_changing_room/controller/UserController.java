@@ -4,9 +4,12 @@ import com.study.cbnu.smart_changing_room.model.User;
 import com.study.cbnu.smart_changing_room.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/user")
@@ -27,6 +30,17 @@ public class UserController {
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.toString());
         }
+    }
+
+    @GetMapping
+    public ResponseEntity getUserId(String name){
+
+        Optional<User> user = userService.getByName(name);
+
+        if(user.isPresent()){
+            return ResponseEntity.ok(user.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
