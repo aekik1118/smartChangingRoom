@@ -42,4 +42,10 @@ public class ClothesController {
         return ResponseEntity.ok(clothes_list);
     }
 
+    @GetMapping(path = "listWithTag")
+    public ResponseEntity getClothesListWithTag(Long id, String tag){
+        List<Clothes> clothes_list = clothesService.get_clothes_list_with_tag(id, tag);
+        return ResponseEntity.ok(clothes_list);
+    }
+
 }

@@ -110,6 +110,16 @@ public class ClothesControllerTest {
 
     }
 
+    @Test
+    public void get_clothes_list_with_tag() throws Exception {
 
+        mockMvc.perform(get("/api/clothes/listWithTag")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("id", "1")
+                .param("tag","겨울용"))
+                    .andDo(print())
+                    .andExpect(status().isOk());
+
+    }
 
 }

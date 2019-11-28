@@ -75,6 +75,32 @@ public class ClothesService {
         return clothesRepository.get_clothes_list(id);
     }
 
+    public List<Clothes> get_clothes_list_with_tag(Long id, String tag) {
+
+        List<Clothes> clothes_list = get_clothes_list(id);
+
+        for(int i=0; i<clothes_list.size(); i++){
+            List<Tag> tagList = tagRepository.select_by_clothes_id(clothes_list.get(i).getId());
+            if(isIn(tagList, tag)){
+                continue;
+            }
+            clothes_list.remove(i);
+            i--;
+        }
+
+        return clothes_list;
+    }
+
+    boolean isIn(List<Tag> tagList, String target){
+
+        for(int i=0; i<tagList.size(); i++){
+
+            if(tagList.get(i).getCategory().equals(target)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     //최근 사용날짜 갱신 작업
