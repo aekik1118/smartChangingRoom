@@ -122,4 +122,15 @@ public class ClothesControllerTest {
 
     }
 
+    @Test
+    public void get_clothes() throws Exception {
+
+        mockMvc.perform(get("/api/clothes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("id", "1"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
+
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/clothes")
@@ -46,6 +47,15 @@ public class ClothesController {
     public ResponseEntity getClothesListWithTag(Long id, String tag){
         List<Clothes> clothes_list = clothesService.get_clothes_list_with_tag(id, tag);
         return ResponseEntity.ok(clothes_list);
+    }
+
+    @GetMapping
+    public ResponseEntity getClothes(Long id){
+        Optional<Clothes> clothes = clothesService.getClothes(id);
+        if(clothes.isPresent()){
+            return ResponseEntity.ok(clothes);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
