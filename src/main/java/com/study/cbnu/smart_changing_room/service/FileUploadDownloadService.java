@@ -15,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.util.Random;
 
 @Service
 public class FileUploadDownloadService {
@@ -33,18 +35,23 @@ public class FileUploadDownloadService {
     }
 
     public String storeFile(MultipartFile file) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        Random random = new Random();
 
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             // 파일명에 부적합 문자가 있는지 확인한다.
             if(fileName.contains(".."))
                 throw new FileUploadException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
 
-            Path targetLocation = this.fileLocation.resolve(fileName);
+            int nextInt = random.nextInt();
+            String saved_fileName = nextInt + fileName;
+
+            Path targetLocation = this.fileLocation.resolve(saved_fileName);
 
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println(targetLocation);
 
-            return fileName;
+            return saved_fileName;
         }catch(Exception e) {
             throw new FileUploadException("["+fileName+"] 파일 업로드에 실패하였습니다. 다시 시도하십시오.",e);
         }
