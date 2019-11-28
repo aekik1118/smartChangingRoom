@@ -53,7 +53,7 @@ public class UserControllerTest {
     public void get_user_id() throws Exception {
 
         User user = User.builder()
-                .name("get_user_id_name")
+                .name("원경식")
                 .build();
 
         User created_user = userService.create(user);

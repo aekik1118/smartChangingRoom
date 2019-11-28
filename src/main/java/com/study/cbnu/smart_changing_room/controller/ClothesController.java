@@ -7,9 +7,12 @@ import com.study.cbnu.smart_changing_room.service.ClothesService;
 import com.study.cbnu.smart_changing_room.service.TagService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/api/clothes")
@@ -33,8 +36,12 @@ public class ClothesController {
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.toString());
         }
+    }
 
-
+    @GetMapping(path = "list")
+    public ResponseEntity getClothesList(Long id){
+        List<Clothes> clothes_list = clothesService.get_clothes_list(id);
+        return ResponseEntity.ok(clothes_list);
     }
 
 }
