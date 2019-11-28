@@ -39,4 +39,15 @@ public class TagControllerTest {
                     .andExpect(status().isOk());
 
     }
+
+    @Test
+    public void get_tag_list_by_clothes_id() throws Exception {
+
+        mockMvc.perform(get("/api/tag/clothes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("id","1"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
 }

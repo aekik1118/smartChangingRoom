@@ -26,4 +26,10 @@ public class TagController {
         List<String> tag_list = tagService.get_list_by_user_id_no_duplication(id);
         return ResponseEntity.ok(tag_list);
     }
+
+    @GetMapping(path = "clothes")
+    public ResponseEntity get_clothes_tag_list(Long id){
+        List<Tag> list_by_clothes_id = tagService.get_list_by_clothes_id(id);
+        return ResponseEntity.ok(list_by_clothes_id);
+    }
 }
