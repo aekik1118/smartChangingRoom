@@ -27,7 +27,7 @@ public class TagController {
         return ResponseEntity.ok(tag_list);
     }
 
-    @GetMapping(path = "clothes")
+    @GetMapping(path = "clothes_tag_list")
     public ResponseEntity get_clothes_tag_list(Long id){
         List<Tag> list_by_clothes_id = tagService.get_list_by_clothes_id(id);
         return ResponseEntity.ok(list_by_clothes_id);
