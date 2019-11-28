@@ -68,4 +68,14 @@ public class UserControllerTest {
         userService.delete(created_user.getId());
     }
 
+    @Test
+    public void get_user_id_not_exist() throws Exception {
+
+        mockMvc.perform(get("/api/user")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("name","not_exist"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
 }
