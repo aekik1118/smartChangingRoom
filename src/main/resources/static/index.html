@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>33's Smart Dress Room</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+
+</head>
+
+<body id="page-top" >
+
+  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+    <a class="navbar-brand mr-1" href="index.html">MY DRESS ROOM</a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar Search -->
+    
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div id="registerbtn" class="btn btn-primary btn-block" style= "color: white;
+        border-color: white;
+        background-color: rgb(0, 0, 0);
+        width: 150px;
+        height: 40px;
+        float: right;
+        margin-left: 15px;"
+        onmouseover="this.style.backgroundColor='#616161'"
+        onmouseout="this.style.backgroundColor='#000000'"
+        >
+        새로운 옷 등록
+      </div> 
+      <div class="input-group">
+        <input type="text" id="searchHash" class="form-control" placeholder="Serch by Hastag..." aria-label="Search" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-primary" id="searchBtn" type="button" style="background:black; border-color: black;">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+  
+
+  </nav>
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav toggled" style="background: #151617;">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-tshirt"></i>
+          <span>33's Smart Dress Room</span>
+        </a>
+      </li>
+      <li class="nav-item" id="login-btn">
+        <a class="nav-link" href="#">
+          <i class="fas fa-tshirt"></i>
+          <span>Login</span></a>
+        </a>
+      </li>
+      <li class="nav-item" id="sign-up-btn">
+        <a class="nav-link" href="#">
+          <i class="fas fa-tshirt"></i>
+          <span>Sign Up</span></a>
+      </li>
+    </ul>
+
+    <div id="content-wrapper" style="background-image: URL(img/back4.jpg); background-size: 100% 100%">
+
+      
+        
+      <!-- register Button-->
+      <div style="opacity: 0.8; margin-bottom: 15px;">
+        <div class="card-header"
+          style="text-align: center;
+          color: white;
+          font-size: 1.5rem;
+          font-weight: 500;
+          background-color: #151617;
+          "
+          >
+
+          <i class="fas fa-tshirt" style="color: white;"></i>
+          My Clothes       
+        </div>
+      </div>
+      
+      <div class="container-fluid" id='list'>
+
+
+        </div>
+          
+    </div>
+
+
+  </div>
+      <!-- /.container-fluid -->
+
+      <!-- Sticky Footer -->
+      <footer class="sticky-footer" style="background:black; opacity: 0.5; ">
+        <div class="container my-auto" >
+          <div class="copyright text-center my-auto">
+              <span style="color: white;">33's Smart Dress Room</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- create Modal-->
+  <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Image</label>
+              <input id="create-img" type="file" name="clothesName">
+            </div>
+            <div class="form-group">
+              <label>ClothesName</label>
+              <input id="create-name" class="form-control form-control-sm" type="text" placeholder="옷에 고유한 이름을 입력해주세요.">
+            </div>
+            <div class="form-group">
+              <label>#Tag</label>
+              <input id="create-tag" class="form-control form-control-sm" type="text" placeholder="원하는 태그들을 입력해주세요. ex)#반팔#검은색#이너용">
+            </div>
+          
+            <button id="create-btn" class="btn btn-primary btn-block" style="width: 90px; height: 40px; float: right;">Register</button>
+            <button class="btn btn-secondary"  data-dismiss="modal" style="width: 90px; height: 40px; float: right;">Cancel</button>
+
+          </div>  
+          <div class="modal-footer">
+          </div>
+        </div>
+    </div>  
+  </div>
+
+  <!-- info Modal-->
+  <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Clothes Information</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>ClothesName</label>
+              <input id="info-name" class="form-control form-control-sm" type="text"  value="" disabled>
+            </div>
+            <div class="form-group">
+              <label>#Tag</label>
+              <input id="info-tag" class="form-control form-control-sm" type="text" value="" disabled>
+            </div>
+            <div class="form-group">
+              <label>status</label>
+              <input id="info-status" class="form-control form-control-sm" type="text" value="" disabled>
+            </div>
+            <div class="form-group">
+              <label>using count</label>
+              <input id="info-using-cnt" class="form-control form-control-sm" type="text" value="" disabled>
+            </div>
+            <div class="form-group">
+              <label>register at</label>
+              <input id="info-register-at" class="form-control form-control-sm" type="text" value="" disabled>
+            </div>
+            <div class="form-group">
+              <label>recent usage at</label>
+              <input id="info-recent-at" class="form-control form-control-sm" type="text" value="" disabled>
+            </div>
+            
+            <button id="delete-btn" class="btn btn-primary btn-block" style="width: 90px; height: 40px; float: right; color: darkred;">Delete</button>
+            <button class="btn btn-secondary"  data-dismiss="modal" style="width: 90px; height: 40px; float: right;">Cancel</button>
+          
+          </div>  
+          <div class="modal-footer">
+          </div>
+        </div>
+    </div>  
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
+  <script src="vendor/datatables/jquery.dataTables.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin.min.js"></script>
+
+  <!-- Demo scripts for this page-->
+  <!-- <script src="js/demo/datatables-demo.js"></script>
+  <script src="js/demo/chart-area-demo.js"></script> -->
+
+
+</body>
+
+<script>
+    $(document).ready(()=>{
+      var cookieId = getCookie('userid');
+
+      if(cookieId) {
+        HashtagReq(cookieId).then((data) => {
+          
+          data.forEach((tag) => {
+            tagClothesReq(cookieId, tag);
+          });
+        }); // end HashtagReq()
+      }      
+    });
+  
+    function getCookie(cookie_name) {
+      var x, y;
+      var val = document.cookie.split(';');
+
+      for (var i = 0; i < val.length; i++) {
+        x = val[i].substr(0, val[i].indexOf('='));
+        y = val[i].substr(val[i].indexOf('=') + 1);
+        x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
+        if (x == cookie_name) {
+          return unescape(y); // unescape로 디코딩 후 값 리턴
+        }
+      }
+      return 0;
+    }
+    
+    //login
+    $('#login-btn').click(()=> {
+      var name = prompt('이름을 입력하세요', '');
+      if (name != null){
+        $.ajax({
+        type: 'get',
+        url:'http://210.89.191.248:8080/api/user?name='+name,
+        dataType: 'json',
+  
+        success: function(data) {
+          document.cookie = 'userid=' + data.id;
+          console.log(data.id);
+          location.reload();
+        },
+        error: function(xhr, status, err){
+          console.log(err);
+        }
+      });
+      }
+      
+    });
+  
+    // sign up
+    $('#sign-up-btn').click(()=> {
+      var regName = prompt('등록할 이름을 입력하세요', '');
+      if (regName != null){
+        $.ajax({
+        type:'POST',
+        url:'http://210.89.191.248:8080/api/user',
+        data: JSON.stringify({name : regName}),
+        contentType:'application/json; charset=UTF-8',
+        dataType: 'json',
+  
+        success: function(data) {
+          console.log(data);
+        },
+  
+        error: function(xhr, status, err, data) {
+          console.log(err);
+          console.log(data);
+        }
+      });
+      }
+    });
+  
+    // hash-tag request
+    function HashtagReq(cookieId) {
+      return new Promise((resolve, reject) => {
+        //hash-tag request
+        $.ajax({
+          type : 'get',
+          url : 'http://210.89.191.248:8080/api/tag/list?id=' + cookieId,
+          dataType : 'json',
+
+          success : function(data) {
+            for(var i=0; i<data.length; i++) {
+              var output = '';
+              output += '<div>';
+              output += ' <div><h3>#' + data[i] + '</h3></div>';
+              output += ' <div class="row" id="' + data[i] + '">';
+              output += ' </div>';
+              output += '</div>'
+
+              $(output).appendTo('#list');
+              if(i == data.length-1) resolve(data);
+            }
+          },
+
+          error : function(xhr, status, err) {
+            console.log(err);
+            reject(err);
+          }
+        });
+      })
+    } // end HashtagReq
+
+    
+    function tagClothesReq(cookieId, tag) {
+      var reqUrl = 'http://210.89.191.248:8080/api/clothes/listWithTag?id=' + cookieId +'&tag=' + tag;
+      $.ajax({
+        type : 'get',
+        url : reqUrl,
+        dataType : 'json',
+
+        success : function(data) {
+          for(var i=0; i<data.length; i++) {
+            var output = '';
+            output += '   <div class="card mb-3" id="'+ data[i].id + '">';
+            output += '     <div class="card_image">';
+            output += '       <img src="' + data[i].img_path + '" width="300px" height="300px"></div>';
+            output += '     <div class="card_title title-black"><p>' + data[i].name + '</p></div>';
+            output += '   </div>';
+
+            var target_id = '#' + tag;
+            $(output).appendTo(target_id);
+          }
+        },
+
+        error : function(xhr, status, err) {
+          console.log(err);
+        }
+      }); // end clothes info request
+    }
+    
+    
+
+    // register   
+    var registerbtn = $("#registerbtn");
+    registerbtn.click(function () {
+      $("#createModal").modal("show");
+    });
+  
+    var createImg = $("#create-img");
+    var createName = $("#create-name");
+    var createTag = $("#create-tag");
+    var createBtn = $("#create-btn");
+    
+    createBtn.click(function(){
+      tagArray = createTag.val().replace(/ /gi, "").split("#"); // 문자열 내의 모든 공백 제거 후, #로 슬라이스
+      tagArray.splice(0, 1); //[0] = 공백이라 제거
+
+      var formData = new FormData();
+      formData.append('file', $('#create-img')[0].files[0]);
+      $.ajax({
+        type:'POST',
+        url: 'http://210.89.191.248:8080/api/file/uploadFile',
+        data:formData,
+        processData: false,
+        contentType: false,
+        success: function(fileName) {
+          $.ajaxSettings.traditional = true;
+  
+          $.ajax({
+            type: "POST",
+            url: "http://210.89.191.248:8080/api/clothes",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({user_id: getCookie('userid'), name: createName.val(), tag_list: tagArray, img_path:fileName}),
+            success: function (data) {
+              alert("등록 되었습니다 ^_^");
+              location.reload();
+            },
+            error: function (request, status, error, data) {
+              alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+          });
+        }
+      })
+      
+    });
+
+    // info clothes
+    //$("#infoModal").modal("show");
+
+    $('#searchBtn').click(()=> {
+      var searchHash = $('#searchHash').val();
+      searchHash = searchHash.split('#');
+      searchHash.splice(0, 1);
+
+      for(var i=0; i<searchHash.length; i++) {
+        tag = searchHash[i].replace(" ", "");
+        var output = '';
+          output += '<div>';
+          output += ' <div><h3>#' + tag + '</h3></div>';
+          output += ' <div class="row" id=' + tag + '>';
+          output += ' </div>';
+          output += '</div>';
+
+          if(i == 0) $('#list').html(output);
+          else $(output).appendTo('#list');
+      }
+
+      searchHash.forEach((tag) => {
+        tag = tag.replace(" ", "");
+        tagClothesReq(getCookie('userid'), tag);
+      });
+    });
+
+
+    // info clothes
+    $(document).on("click", "div.card", function(){
+      var clothesId = $(this).attr('id');
+      $.ajax({
+        type: "GET",
+        url: "http://210.89.191.248:8080/api/clothes?id=" + clothesId,
+        contentType: "application/json",
+        dataType: "json",
+        async: false,
+        success: function(data) {
+          $.ajaxSettings.traditional = true;
+          $.ajax({
+            type: "GET",
+            url: "http://210.89.191.248:8080/api/tag/clothes_tag_list?id=" + clothesId,
+            contentType: "application/json",
+            dataType: "json",
+            async: false,
+            success: function(data) {
+              var tags = '';
+              data.forEach(function(element){
+                tags += '#' + element.category + ' '  
+              });
+              $('#info-tag').val(tags);
+            },
+            error: function (request, status, error) {
+              alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+          });
+          $('#info-name').val(data.name);
+          $('#info-status').val(data.status);
+          $('#info-using-cnt').val(data.using_count);
+          $('#info-register-at').val(data.register_at);
+          $('#info-recent-at').val(data.recent_usage_at);
+          $("#infoModal").modal("show");
+        },
+        error: function (request, status, error) {
+          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    });
+
+  </script>
+  <style>
+    .card {
+      margin-left:15px
+    }
+  </style>
+
+</html>
