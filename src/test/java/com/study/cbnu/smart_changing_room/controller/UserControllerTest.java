@@ -53,7 +53,7 @@ public class UserControllerTest {
     public void get_user_id() throws Exception {
 
         User user = User.builder()
-                .name("get_user_id_name")
+                .name("원경식")
                 .build();
 
         User created_user = userService.create(user);
@@ -66,6 +66,16 @@ public class UserControllerTest {
                     .andExpect(jsonPath("id").exists());
 
         userService.delete(created_user.getId());
+    }
+
+    @Test
+    public void get_user_id_not_exist() throws Exception {
+
+        mockMvc.perform(get("/api/user")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .param("name","not_exist"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 
 }

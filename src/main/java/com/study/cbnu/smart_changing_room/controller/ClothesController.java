@@ -7,12 +7,14 @@ import com.study.cbnu.smart_changing_room.service.ClothesService;
 import com.study.cbnu.smart_changing_room.service.TagService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/clothes")
+@CrossOrigin("*")
 public class ClothesController {
 
     private final ClothesService clothesService;
@@ -33,8 +35,27 @@ public class ClothesController {
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.toString());
         }
+    }
 
+    @GetMapping(path = "list")
+    public ResponseEntity getClothesList(Long id){
+        List<Clothes> clothes_list = clothesService.get_clothes_list(id);
+        return ResponseEntity.ok(clothes_list);
+    }
 
+    @GetMapping(path = "listWithTag")
+    public ResponseEntity getClothesListWithTag(Long id, String tag){
+        List<Clothes> clothes_list = clothesService.get_clothes_list_with_tag(id, tag);
+        return ResponseEntity.ok(clothes_list);
+    }
+
+    @GetMapping
+    public ResponseEntity getClothes(Long id){
+        Optional<Clothes> clothes = clothesService.getClothes(id);
+        if(clothes.isPresent()){
+            return ResponseEntity.ok(clothes);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

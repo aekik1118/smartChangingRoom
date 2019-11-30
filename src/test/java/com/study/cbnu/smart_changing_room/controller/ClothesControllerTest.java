@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -89,7 +90,7 @@ public class ClothesControllerTest {
                 .build();
 
         mockMvc.perform(post("/api/clothes")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(clothesDTO)))
                 .andDo(print())
                 .andExpect(jsonPath("id").exists())
@@ -99,10 +100,37 @@ public class ClothesControllerTest {
     }
 
     @Test
-    public void get_clothse(){
+    public void get_clothes_list() throws Exception {
+
+        mockMvc.perform(get("/api/clothes/list")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("id", "1"))
+                    .andDo(print())
+                    .andExpect(status().isOk());
 
     }
 
+    @Test
+    public void get_clothes_list_with_tag() throws Exception {
 
+        mockMvc.perform(get("/api/clothes/listWithTag")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("id", "1")
+                .param("tag","겨울용"))
+                    .andDo(print())
+                    .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void get_clothes() throws Exception {
+
+        mockMvc.perform(get("/api/clothes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("id", "1"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
 
 }

@@ -93,4 +93,11 @@ public class UserRepositoryTest {
         assertThat(userByName.get().getId()).isEqualTo(user.getId());
     }
 
+    @Test
+    public void get_user_by_name_not_exist(){
+
+        Optional<User> userByName = userRepository.getUserByName("not exist");
+        assertThat(userByName.isPresent()).isEqualTo(false);
+    }
+
 }
