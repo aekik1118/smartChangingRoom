@@ -397,17 +397,17 @@
         data:formData,
         processData: false,
         contentType: false,
-        success: function(fileName) {
+        success: function(ob) {
           $.ajaxSettings.traditional = true;
 
-          console.log(fileName);
+          console.log(ob.fileName);
   
           $.ajax({
             type: "POST",
             url: "http://210.89.191.248:8080/api/clothes",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify({user_id: getCookie('userid'), name: createName.val(), tag_list: tagArray, image_path:fileName}),
+            data: JSON.stringify({user_id: getCookie('userid'), name: createName.val(), tag_list: tagArray, image_path:ob.fileName}),
             success: function (data) {
               alert("등록 되었습니다 ^_^");
               location.reload();
