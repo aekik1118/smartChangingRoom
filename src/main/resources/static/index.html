@@ -357,7 +357,7 @@
             var output = '';
             output += '   <div class="card mb-3" id="'+ data[i].id + '">';
             output += '     <div class="card_image">';
-            output += '       <img src="' + data[i].img_path + '" width="300px" height="300px"></div>';
+            output += '       <img src="./uploads"+"' + data[i].image_path + '" width="300px" height="300px"></div>';
             output += '     <div class="card_title title-black"><p>' + data[i].name + '</p></div>';
             output += '   </div>';
 
@@ -405,7 +405,7 @@
             url: "http://210.89.191.248:8080/api/clothes",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify({user_id: getCookie('userid'), name: createName.val(), tag_list: tagArray, img_path:fileName}),
+            data: JSON.stringify({user_id: getCookie('userid'), name: createName.val(), tag_list: tagArray, image_path:fileName}),
             success: function (data) {
               alert("등록 되었습니다 ^_^");
               location.reload();
