@@ -43,7 +43,7 @@ public class FileUploadDownloadService {
             if(fileName.contains(".."))
                 throw new FileUploadException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
 
-            int nextInt = random.nextInt();
+            int nextInt = random.nextInt(999);
             String saved_fileName = nextInt + fileName;
 
             Path targetLocation = this.fileLocation.resolve(saved_fileName);
