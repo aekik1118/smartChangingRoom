@@ -64,6 +64,7 @@ public class ClothesControllerTest {
                 .user_id(created_user.getId())
                 .name("clothes_test_name")
                 .tag_list(test_tag_list)
+                .image_path("dsagtsey.jpg")
                 .build();
 
         mockMvc.perform(post("/api/clothes")
